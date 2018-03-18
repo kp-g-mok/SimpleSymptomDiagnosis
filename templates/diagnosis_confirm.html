@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<html lang = "en">
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+		<meta name = "viewport" content = "width=device-width, initial-scale=1">
+		<title>Simple Symptom Searcher</title>
+	</head>
+	
+	<body>
+		<div class = "container">
+			<nav class="navbar navbar-default" role="navigation">
+                <a href="/symptom_select/"><button type="button">Start Over</button></a>
+			</nav>
+			
+			<div class = "row">
+				<form action="http://localhost:8000/diagnosis_report/{{diagnosis.symptom_id}}/{{diagnosis.id}}" method="post">
+					<h1>Do you have {{diagnosis.name}}?</h1>
+					<select onchange="this.form.action=this.value; this.form.method=this.method">
+						<option value="http://localhost:8000/diagnosis_report/{{diagnosis.symptom_id}}/{{diagnosis.id}}" method="post">Yes</option>
+						<option value="http://localhost:8000/diagnosis_select/{{diagnosis.symptom_id}}" method="get">No</option>
+					</select>
+					<input type="submit" value="Submit Symptom"/>
+					{% csrf_token %}
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

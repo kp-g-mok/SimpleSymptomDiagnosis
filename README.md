@@ -27,6 +27,11 @@ The React Frontend must be started for this to work
 5. If not correct, select the correct diagnosis from the dropdown
 6. Once selected, the report from step 4 will show.
 
+### Using Django Templates
+The React Frontend doesn't need to be started for this to work
+1. Open your web browser to localhost:8000/symptom_select
+2. The same steps apply here from the react running instructions
+
 ## API Documentation
 The applications data model is exposed through several urls
 1. /api/symptoms/ - gets all the symptoms within the system
