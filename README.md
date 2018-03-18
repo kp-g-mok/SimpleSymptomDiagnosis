@@ -15,7 +15,8 @@ The Simple Symptom Diagnosis application provides you with the most frequent dia
 ### React Frontend Setup
 1. Open another command line window in the folder you downloaded the files to.
 2. Change the directory to the frontend folder
-3. run npm start
+3. run npm i
+4. run npm start
 
 ## Usage Instructions
 ### Using React
