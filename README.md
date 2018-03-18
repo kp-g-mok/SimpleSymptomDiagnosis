@@ -36,8 +36,8 @@ The React Frontend doesn't need to be started for this to work
 ## API Documentation
 The applications data model is exposed through several urls
 1. /api/symptoms/ - gets all the symptoms within the system
-2. /api/symptoms/<symptom id> - gets all the diagnoses that are linked to the given symptom
-3. /api/symptoms/<symptom id>/retrieve_most_freq - gets the most frequently selected diagnosis that is linked to the given symptom
+2. /api/symptoms/{symptom id} - gets all the diagnoses that are linked to the given symptom
+3. /api/symptoms/{symptom id}/retrieve_most_freq - gets the most frequently selected diagnosis that is linked to the given symptom
 4. /api/diagnosis/ - gets all the diagnoses within the system
-5. /api/diagnosis/<diagnosis id>/ - gets the details for a single diagnosis
-6. /api/diagnosis/<diagnosis id>/increment_freq/ - posts a request to increment the frequency of the given diagnosis by one
+5. /api/diagnosis/{diagnosis id}/ - gets the details for a single diagnosis
+6. /api/diagnosis/{diagnosis id}/increment_freq/ - posts a request to increment the frequency of the given diagnosis by one
