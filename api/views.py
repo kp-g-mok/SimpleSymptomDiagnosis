@@ -9,7 +9,8 @@ from .serializers import SymptomSerializer, DiagnosisSerializer
 
 # Create your views here.
 class SymptomViewSet(viewsets.ModelViewSet):
-    queryset = Symptom.objects.all()serializer_class = SymptomSerializer
+    queryset = Symptom.objects.all()
+    serializer_class = SymptomSerializer
 
     def retrieve(self, request, pk=None):
         symptom = get_object_or_404(self.queryset, pk=pk)
