@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {symptoms} from '../actions';
 
 class SymptomSelect extends Component {  
   state = {
     value: 1,
+  }
+
+  componentDidMount() {
+      this.props.fecthSymptoms();
   }
 
   submitSymptom = (e) => {
@@ -20,9 +26,9 @@ class SymptomSelect extends Component {
         <h3>Select a symptom you currently have:</h3>
         <form onSubmit={this.submitSymptom}>
           <select value={this.state.value} onChange={this.handleChange}>
-            <option value='1'>Symptom 1</option>
-            <option value='2'>Symptom 2</option>
-            <option value='3'>Symptom 3</option>
+            {this.props.symptoms.map(symptom => (                
+                <option value={symptom.id}>{symptom.name}</option>
+            ))}
           </select>
           <input type="submit" value="Submit Symptom" />
         </form>
@@ -31,4 +37,18 @@ class SymptomSelect extends Component {
   }
 }
 
-export default SymptomSelect;
+const mapStateToProps = state => {
+  return {
+    symptoms: state.symptoms,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fecthSymptoms: () => {
+      dispatch(symptoms.fecthSymptoms());
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SymptomSelect);
