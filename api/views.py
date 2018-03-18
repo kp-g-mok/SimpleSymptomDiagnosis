@@ -38,13 +38,23 @@ class DiagnosisViewSet(viewsets.ModelViewSet):
         return Response(serialized_data.data)
 
 def symptom_select(request):
-    return render(request)
+    symptom_ = list(Symptom.objects.all().values())
+    return render(request, 'symptom_select.html', {'symptoms': symptom_})
 	
 def diagnosis_confirm(request, symptom_id):
-    return render(request)
+    symptom_ = Symptom.objects.get(id = symptom_id)
+    diagnosis_ = Diagnosis.objects.filter(symptom=symptom_).latest()
+    return render(request, 'diagnosis_confirm.html', {'diagnosis': diagnosis_})
 	
 def diagnosis_select(request, symptom_id):
-    return render(request)
+    symptom_ = Symptom.objects.get(id = symptom_id)
+    diagnosis_ = list(Diagnosis.objects.filter(symptom=symptom_).values())
+    return render(request, 'diagnosis_select.html', {'symptom': symptom_, 'diagnosis': diagnosis_})
     
 def diagnosis_report(request, symptom_id, diagnosis_id):
-    return render(request)
+    update_diagnosis = Diagnosis.objects.get(id=diagnosis_id)
+    update_diagnosis.increment_frequency()
+    
+    symptom_ = Symptom.objects.get(id = symptom_id)
+    diagnosis_ = list(Diagnosis.objects.filter(symptom=symptom_).values())
+    return render(request, 'diagnosis_report.html', {'symptom': symptom_, 'diagnosis': diagnosis_})

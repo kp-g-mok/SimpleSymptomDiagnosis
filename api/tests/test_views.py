@@ -59,35 +59,34 @@ class ViewFunctionsTest(TestCase):
     """
     def test_templates_used(self):
         url_template_list = [
-            { 'path': 'symptom_select/', 'template': 'symptom_select.html'},
-            { 'path': 'diagnosis_confirm/1', 'template': 'diagnosis_confirm.html'},
-            { 'path': 'diagnosis_select/1', 'template': 'diagnosis_select.html'},
+            { 'path': '/symptom_select/', 'template': 'symptom_select.html'},
+            { 'path': '/diagnosis_confirm/1', 'template': 'diagnosis_confirm.html'},
+            { 'path': '/diagnosis_select/1', 'template': 'diagnosis_select.html'},
         ]
         
         for url_template in url_template_list:
             response = self.client.get(url_template['path'])
             self.assertTemplateUsed(response, url_template['template'])
             
-        response = self.client.post('diagnosis_select/1/1')
+        response = self.client.post('/diagnosis_report/1/1')
         self.assertTemplateUsed(response, 'diagnosis_report.html')
             
     def test_values_retrieved_from_url(self):
         url_value_list = [
-            { 'path': 'diagnosis_confirm/1', 'variable': 'diagnosis', 'value': Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).latest()},
-            { 'path': 'diagnosis_select/1', 'variable': 'symptom', 'value': Symptom.objects.get(id=1)},
-            { 'path': 'diagnosis_select/1', 'variable': 'diagnosis', 'value': list(Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).values())},
+            { 'path': '/diagnosis_confirm/1', 'variable': 'diagnosis', 'value': Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).latest()},
+            { 'path': '/diagnosis_select/1', 'variable': 'symptom', 'value': Symptom.objects.get(id=1)},
+            { 'path': '/diagnosis_select/1', 'variable': 'diagnosis', 'value': list(Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).values())},
         ]
 
         for url_value in url_value_list:
             response = self.client.get(url_value['path'])
-            self.assertEqual(response.context['diagnosis'], url_value['value'])
+            self.assertEqual(response.context[url_value['variable']], url_value['value'])
 		
-        { 'path': 'diagnosis_select/1/1', 'value': Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1))},
-        response = self.client.post('diagnosis_report/1/1')
-        self.assertEqual(response.context['symptom'], Symptom.bojects.get(id=1))
-        self.assertEqual(response.context['symptom'], list(Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).values()))
+        response = self.client.post('/diagnosis_report/1/1')
+        self.assertEqual(response.context['symptom'], Symptom.objects.get(id=1))
+        self.assertEqual(response.context['diagnosis'], list(Diagnosis.objects.filter(symptom=Symptom.objects.get(id=1)).values()))
 
     def test_increment_diagnosis_frequency(self):
-        response = self.client.post('diagnosis_report/1/1')
+        response = self.client.post('/diagnosis_report/1/1')
         diagnosis_ = Diagnosis.objects.get(id=1, symptom=Symptom.objects.get(id=1))
         self.assertEqual(diagnosis_.frequency, 2)
