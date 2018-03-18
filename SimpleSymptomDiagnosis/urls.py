@@ -1,4 +1,4 @@
-"""SimpleSymptomDiagnosis URL Configuration
+"""SimpleSymptomSearcher URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -15,15 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
 from django.views.generic import TemplateView
 
-import api.urls
 import api.views
+
+router = routers.DefaultRouter()
+router.register('symptoms', api.views.SymptomViewSet)
+router.register('diagnosis', api.views.DiagnosisViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html")),
-    path('api/', include(api.urls)),
+    path('api/', include(router.urls)),
     path('symptom_select/', api.views.symptom_select),
     path('diagnosis_confirm/<int:symptom_id>', api.views.diagnosis_confirm),
     path('diagnosis_select/<int:symptom_id>', api.views.diagnosis_select),
