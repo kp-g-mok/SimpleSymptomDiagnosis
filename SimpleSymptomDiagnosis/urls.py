@@ -18,9 +18,14 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 import api.urls
+import api.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="index.html")),
-    path('api/', include(api.urls))
+    path('api/', include(api.urls)),
+    path('symptom_select/', api.views.symptom_select),
+    path('diagnosis_confirm/<int:symptom_id>', api.views.diagnosis_confirm),
+    path('diagnosis_select/<int:symptom_id>', api.views.diagnosis_select),
+    path('diagnosis_report/<int:symptom_id>/<int:diagnosis_id>', api.views.diagnosis_report),
 ]
